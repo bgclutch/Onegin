@@ -2,9 +2,10 @@
 #include <inttypes.h>
 
 #include "../onegin_headers/my_swap.h"
+#include "../onegin_headers/onegin_structs.h"
 
 
-void my_swap(void* var_1, void* var_2, unsigned long size)
+void_sex my_swap(void* var_1, void* var_2, unsigned long size)
 {
     unsigned long add_bytes = 0;
 

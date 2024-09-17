@@ -2,6 +2,7 @@
 #include <assert.h>
 
 #include "../onegin_headers/my_string_functions.h"
+#include "../onegin_headers/onegin_structs.h"
 
 size_t my_strlen(const char* arr)
 {

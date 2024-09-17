@@ -6,9 +6,13 @@
 
 #include "../onegin_headers/bubble_sort.h"
 #include "../onegin_headers/my_swap.h"
+#include "../onegin_headers/output_functions.h"
 
 void bubble_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size)
 {   
+    assert(&array[0][0]);
+    assert(string_size);
+    assert(string_num);
     for(size_t j = 0; j < arr_size; j++)
     {   
         for(size_t i = 0; i < arr_size - j; i++)

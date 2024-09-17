@@ -1,8 +1,8 @@
 #ifndef MY_STRING_FUNCTIONS_H_
 #define MY_STRING_FUNCTIONS_H_
 
-size_t my_strlen(const char* arr);
+#include "../onegin_headers/onegin_structs.h"
 
-size_t my_ftell(FILE* my_file);
+size_t my_strlen(const char* arr);
 
 #endif //MY_STRING_FUNCTIONS_H_
