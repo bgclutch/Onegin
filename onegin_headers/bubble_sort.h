@@ -5,4 +5,8 @@
 
 void_sex bubble_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size);
 
+void_sex my_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size);
+
+void_sex my_sort_end(char** array, size_t* string_size, size_t* string_num, size_t arr_size);
+
 #endif //BUBBLE_SORT_H_

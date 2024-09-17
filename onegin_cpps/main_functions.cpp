@@ -82,6 +82,13 @@ void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_a
 }
 
 
+void_sex fill_sorted_file(Onegin_Arrays *data_ararys, const Onegin_Variables data_vars, FILE* file_outp)
+{
+    for(size_t index = 0; index < data_vars.str_nums; index++)
+        fputs(data_ararys->strings_ptrs[index], file_outp);
+}
+
+
 void_sex mem_free(Onegin_Arrays *data_arrays)
 {
     free(data_arrays->my_buffer);

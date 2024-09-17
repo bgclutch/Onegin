@@ -63,6 +63,22 @@ int main(void)
     bubble_sort(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1); //my_sort should be here
 
     output_array(data_vars, &data_arrays);
+
+    printf("\n\n");
+
+    // my_sort(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1);
+
+    // output_array(data_vars, &data_arrays);
+
+    // printf("\n\n");
+
+    my_sort_end(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1);
+
+    output_array(data_vars, &data_arrays);
+
+    printf("\n\n");
+
+    fill_sorted_file(&data_arrays, data_vars, onegin_sorted_text);
     
     mem_free(&data_arrays);
 

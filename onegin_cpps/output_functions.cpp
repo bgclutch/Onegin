@@ -18,7 +18,7 @@ void_sex memory_fault_error_checker(const void* data, size_t line)
 {
     if(data == nullptr)
         {
-            printf("not enough memory to do actions in %lu, lol\n\n", line);
+            printf("not enough memory to do actions in %p, lol\n\n", data);
         }
 }
 
