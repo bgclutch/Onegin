@@ -6,7 +6,6 @@
 
 size_t num_of_str(Onegin_Arrays *data_arrays, size_t file_size)
 {
-    memory_fault_error_checker(data_arrays->strings_nums, __LINE__);
     size_t counter_str = 0;
     for(size_t index = 0; index < file_size; index++)
     {

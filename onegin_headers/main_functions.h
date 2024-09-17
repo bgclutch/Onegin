@@ -11,7 +11,7 @@ void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_var
 
 void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_vars);
 
-void_sex fill_ptrs_array(const Onegin_Variables data_vars, const Onegin_Arrays *data_arrays);
+void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays);
 
 void_sex string_nums_and_sizes(const Onegin_Variables data_variables, Onegin_Arrays *data_arrays);
 

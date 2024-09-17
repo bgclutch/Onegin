@@ -16,6 +16,7 @@
 
 int main(void)
 {
+    //func with argv
     const char* fonegin_read  = "onegin_first_try.txt";
     const char* fonegin_write = "sorted_onegin.txt";
 
@@ -47,25 +48,13 @@ int main(void)
 
     my_buffer_create(&data_arrays, &data_vars, onegin_unsorted_text);
 
-    data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);//number of strings
-
-    printf("%lu\n", data_vars.str_nums);
+    data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);
 
     dynamic_arrays_create(&data_arrays, &data_vars);
 
     string_nums_and_sizes(data_vars, &data_arrays);
 
-    //fill_ptrs_array(data_vars, &data_arrays);//!!!
-
-    for(size_t i = 0; i < data_vars.str_nums; i++)
-    {
-        printf("running_sum %lu %lu\n", i, data_arrays.running_sum[i]);
-    }
-
-    for(size_t i = 0; i < data_vars.str_nums; i++)
-    {
-        data_arrays.strings_ptrs[i] = &(data_arrays.my_buffer[data_arrays.running_sum[i]]);
-    }
+    ptrs_array_fill(data_vars, &data_arrays);
 
     output_array(data_vars, &data_arrays);
 
@@ -85,5 +74,5 @@ int main(void)
 }
 
 
-//TODO - // стркмп edit с конца организовать сортировку (сначала по началу, потом по концу строки)
+//TODO - // strcmp с конца организовать сортировку (сначала по началу, потом по концу строки) my_sort
 

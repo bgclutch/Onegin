@@ -26,6 +26,7 @@ void_sex symbols_num_check(const Onegin_Variables *data_vars)
 void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_vars, FILE* file_name)
 {
     data_arrays->my_buffer = (char*) calloc(data_vars->symbols_num, sizeof(char));
+    memory_fault_error_checker(data_arrays->my_buffer, __LINE__);
 
     fread(data_arrays->my_buffer, sizeof(char), data_vars->symbols_num, file_name);
 }
@@ -72,9 +73,9 @@ void_sex string_nums_and_sizes(const Onegin_Variables data_vars, Onegin_Arrays *
 }
 
 
-void_sex fill_ptrs_array(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays)
+void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays)
 {
-    for(size_t i = 0; i < data_vars.symbols_num; i++)
+    for(size_t i = 0; i < data_vars.str_nums; i++)
     {
         data_arrays->strings_ptrs[i] = &(data_arrays->my_buffer[data_arrays->running_sum[i]]);
     }
