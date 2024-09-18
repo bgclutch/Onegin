@@ -3,18 +3,16 @@
 #include <math.h>
 
 #include "../onegin_headers/onegin_structs.h"
-#include "../onegin_headers/text_actions.h"
 #include "../onegin_headers/output_functions.h"
-#include "../onegin_headers/main_functions.h"
+#include "../onegin_headers/array_to_file_translation.h"
 
 size_t symbols_number(Onegin_Files_Attributes *data_files)
 {
-    assert(data_files->file_read && "pososal huyaku");
-    fseek(data_files->file_read, 0, SEEK_END);
+    //assert(data_files->file_read && "pososal huyaku");
+    fseek(data_files->file_read, 0, SEEK_END); // FIXME check errors
     size_t result = (size_t)ftell(data_files->file_read);//number of symbols
     fseek(data_files->file_read, 0, SEEK_SET);
 
-    assert(result);
     //fprintf(stderr, "penis %lu\n", result);
     return result;
 }
@@ -22,7 +20,6 @@ size_t symbols_number(Onegin_Files_Attributes *data_files)
 
 void_sex symbols_num_check(const Onegin_Variables data_vars)
 {
-    assert(data_vars.symbols_num);
     if(data_vars.symbols_num == 0)      
     {
         printf("fill your file better, lol\n\n"); //free mem and finish
@@ -37,6 +34,24 @@ void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars
 
     fread(data_arrays->my_buffer, sizeof(char), data_vars.symbols_num, file_name);
 }
+
+
+size_t num_of_str(Onegin_Arrays *data_arrays, size_t file_size)
+{
+    // FIXME assert
+
+    size_t counter_str = 0;
+    for(size_t index = 0; index < file_size; index++)
+    {
+        if(data_arrays->my_buffer[index] == '\n')
+        {
+            data_arrays->my_buffer[index] = '\0';
+            counter_str++;
+        }
+    }
+    return counter_str;
+}
+
 
 
 void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars)
@@ -70,7 +85,7 @@ void_sex string_nums_and_sizes(const Onegin_Variables data_vars, Onegin_Arrays *
             index++;
         }
         counter++;
-        index++;
+        index++; // FIXME huinya. Dumay
         data_arrays->strings_nums[str_n] = str_n;
         data_arrays->strings_sizes[str_n] = counter;
 
@@ -85,7 +100,7 @@ void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_a
 {
     for(size_t i = 0; i < data_vars.str_nums; i++)
     {
-        data_arrays->strings_ptrs[i] = &(data_arrays->my_buffer[data_arrays->running_sum[i]]);
+        data_arrays->strings_ptrs[i] = &(data_arrays->my_buffer[data_arrays->running_sum[i]]);// TODO rename prefix_sum
     }
 }
 

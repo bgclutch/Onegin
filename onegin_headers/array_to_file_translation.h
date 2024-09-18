@@ -9,6 +9,8 @@ void_sex symbols_num_check(const Onegin_Variables data_vars);
 
 void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, FILE* file_name);
 
+size_t num_of_str(Onegin_Arrays *data_arrays, size_t file_size);
+
 void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars);
 
 void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays);
