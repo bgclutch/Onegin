@@ -20,7 +20,7 @@ void_sex my_sort(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars)
     {   
         for(size_t i = 0; i < data_vars.str_nums - j - 1; i++)
         {
-            result = my_string_comparer_from_start(data_arrays->strings_ptrs[i], data_arrays->strings_ptrs[i + 1]);
+            result = my_string_comparer_from_start(data_arrays->strings_ptrs[i], data_arrays->strings_ptrs[i + 1],  data_arrays->strings_sizes[i], data_arrays->strings_sizes[i + 1]);
             if(result == SWAP_STRINGS)
             {
                 my_swap(&data_arrays->strings_ptrs[i], &data_arrays->strings_ptrs[i + 1], sizeof(*data_arrays->strings_ptrs)); 
@@ -39,7 +39,7 @@ void_sex my_sort_end(Onegin_Arrays *data_arrays, const Onegin_Variables data_var
     {   
         for(size_t i = 0; i < data_vars.str_nums - j - 1; i++)
         {
-            result = my_string_comparer_from_end(data_arrays->strings_ptrs[i], data_arrays->strings_ptrs[i + 1]);
+            result = my_string_comparer_from_end(data_arrays->strings_ptrs[i], data_arrays->strings_ptrs[i + 1], data_arrays->strings_sizes[i], data_arrays->strings_sizes[i + 1]);
             if(result == SWAP_STRINGS)
             {
                 my_swap(&data_arrays->strings_ptrs[i], &data_arrays->strings_ptrs[i + 1], sizeof(*data_arrays->strings_ptrs)); 

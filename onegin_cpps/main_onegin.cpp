@@ -78,12 +78,12 @@ int main(int argc, char* argv[])
 
     output_array(data_vars, &data_arrays);
 
-    printf("\n\n"
-           "sorted from the start\n\n");
+    // printf("\n\n"
+    //        "sorted from the start\n\n");
 
-    my_sort(&data_arrays, data_vars);
+    // my_sort(&data_arrays, data_vars);
 
-    output_array(data_vars, &data_arrays);
+    // output_array(data_vars, &data_arrays);
 
      printf("\n\n"
             "sorted from the end\n\n");
