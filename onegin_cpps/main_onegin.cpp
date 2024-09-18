@@ -12,7 +12,7 @@
 #include "../onegin_headers/output_functions.h"
 #include "../onegin_headers/onegin_structs.h"
 #include "../onegin_headers/main_functions.h"
-#include "../onegin_headers/file_input.h"
+#include "../onegin_headers/files_input.h"
 
 
 struct Onegin_Arrays data_arrays =
@@ -47,29 +47,25 @@ int main(int argc, char* argv[])
     //     strtchr();
     // }
 
-    file_read_open(&data_files, &argv[1]); //cant open file to read, fix
+    file_read_open(&data_files, argv[1]); //cant open file to read, fix
         
     data_vars.symbols_num = symbols_number(&data_files);
-    printf("symbols_num %lu\n", data_vars.symbols_num);
 
-    symbols_num_check(&data_vars);
+    symbols_num_check(data_vars);
 
-    fprintf(stderr, "symbols num %lu\n", data_vars.symbols_num);
+    my_buffer_create(&data_arrays, data_vars, data_files.file_read);
+    //fprintf(stderr, "my_buffer %p\n", data_arrays.my_buffer);
 
-    my_buffer_create(&data_arrays, &data_vars, data_files.file_read);
-
-    for(size_t i = 0; i < data_vars.symbols_num; i++)
-    {
-        printf("%d ", data_arrays.my_buffer[i]);
-        if(data_arrays.my_buffer[i] == '\0')
-            printf(" penis was found ");
-    }
+    // for(size_t i = 0; i < data_vars.symbols_num; i++)
+    // {
+    //     printf("%c", data_arrays.my_buffer[i]);
+    //     if(data_arrays.my_buffer[i] == '\n')
+    //         printf("\npenis was found\n");
+    // }
 
     my_file_close(data_files.file_read);
     
     data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);
-    printf("pisa popa\n");
-    fprintf(stderr, "str_nums %lu\n", data_vars.str_nums);
 
     dynamic_arrays_create(&data_arrays, data_vars);
 

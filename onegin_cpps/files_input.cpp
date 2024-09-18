@@ -2,13 +2,12 @@
 
 #include "../onegin_headers/onegin_structs.h"
 #include "../onegin_headers/output_functions.h"
-#include "../onegin_headers/file_input.h"
+#include "../onegin_headers/files_input.h"
 
-void_sex file_read_open(Onegin_Files_Attributes *data_files, char *argv[1])
+void_sex file_read_open(Onegin_Files_Attributes *data_files, const char *file_read_open)
 {
-    data_files->file_read = fopen(argv[1],  "rb");
+    data_files->file_read = fopen(file_read_open,  "r");
     memory_fault_error_checker(data_files->file_read, "file_read", "file_read_open"); //strrchr
-    printf("file_read address %p\n", data_files->file_read);
 }
 
 void_sex file_write_open(Onegin_Files_Attributes *data_files, const char* file_write_open)

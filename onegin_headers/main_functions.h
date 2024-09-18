@@ -5,9 +5,9 @@
 
 size_t symbols_number(Onegin_Files_Attributes *data_files);
 
-void_sex symbols_num_check(const Onegin_Variables *data_vars);
+void_sex symbols_num_check(const Onegin_Variables data_vars);
 
-void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_vars, FILE* file_name);
+void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, FILE* file_name);
 
 void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars);
 

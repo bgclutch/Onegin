@@ -13,30 +13,29 @@ size_t symbols_number(Onegin_Files_Attributes *data_files)
     fseek(data_files->file_read, 0, SEEK_END);
     size_t result = (size_t)ftell(data_files->file_read);//number of symbols
     fseek(data_files->file_read, 0, SEEK_SET);
-    fprintf(stderr, "result %lu\n", result);
 
+    assert(result);
+    //fprintf(stderr, "penis %lu\n", result);
     return result;
 }
 
 
-void_sex symbols_num_check(const Onegin_Variables *data_vars)
+void_sex symbols_num_check(const Onegin_Variables data_vars)
 {
-    if(data_vars->symbols_num == 0)      
+    assert(data_vars.symbols_num);
+    if(data_vars.symbols_num == 0)      
     {
         printf("fill your file better, lol\n\n"); //free mem and finish
     }
 }
 
 
-void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_vars, FILE* file_name)
+void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, FILE* file_name)
 {
-    data_arrays->my_buffer = (char*) calloc(data_vars->symbols_num, sizeof(char));
+    data_arrays->my_buffer = (char*) calloc(data_vars.symbols_num, sizeof(char));
     memory_fault_error_checker(data_arrays->my_buffer, "my_buffer", "my_buffer_create");
 
-    fread(data_arrays->my_buffer, sizeof(char), data_vars->symbols_num, file_name);
-    for (size_t i = 0; i < data_vars->symbols_num; i++) {
-        fprintf(stderr, "%x\n", data_arrays->my_buffer[i]);
-    }
+    fread(data_arrays->my_buffer, sizeof(char), data_vars.symbols_num, file_name);
 }
 
 

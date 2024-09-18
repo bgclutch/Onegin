@@ -25,6 +25,6 @@ onegin_o/%.o: onegin_cpps/%.cpp
 # $< - first requisit $@ - compilation target name(EXECUTABLE)
 
 clean:
-	rm -rf *.o $(EXECUTABLE) 
+	rm -rf onegin_o/*.o $(EXECUTABLE) 
 # here rm -rf remove directories *.o in EXECUTABLE(kvadratka) and content in them and ignore non-existing files
 #equals to rm -r -f
