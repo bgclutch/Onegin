@@ -77,15 +77,15 @@ size_t my_string_comparer_from_end(const char* str_1, const char* str_2)
 enum CompareResults compare_result(char symb_1, char symb_2)
 {
     enum CompareResults comp_res = CONTINUE_COMPARE;
-    if(tolower(symb_1) > tolower(symb_2))
+    if(toupper(symb_1) > toupper(symb_2))
         {
             comp_res = SWAP_STRINGS;
         }
-    else if(tolower(symb_1) < tolower(symb_2))
+    else if(toupper(symb_1) < toupper(symb_2))
         {
             comp_res = NOT_SWAP_STRINGS;
         }
-    else if(tolower(symb_1) == tolower(symb_2))
+    else if(toupper(symb_1) == toupper(symb_2))
         {
             comp_res = CONTINUE_COMPARE;
         } 

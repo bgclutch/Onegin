@@ -31,5 +31,13 @@ struct Onegin_Variables
     size_t    symbols_num;
 };
 
+struct Onegin_Files_Attributes
+{
+    FILE*           file_read;
+    FILE*          file_write;
+    size_t   first_file_index;
+    size_t  second_file_index;
+};
+
 
 #endif //ONEGIN_STRUCTS_H_

@@ -3,7 +3,7 @@
 
 #include "../onegin_headers/onegin_structs.h"
 
-void_sex symbols_number(Onegin_Variables *data_vars, FILE* file_name);
+size_t symbols_number(Onegin_Files_Attributes data_files);
 
 void_sex symbols_num_check(const Onegin_Variables *data_vars);
 

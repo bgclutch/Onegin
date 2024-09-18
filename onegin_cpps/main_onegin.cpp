@@ -12,22 +12,10 @@
 #include "../onegin_headers/output_functions.h"
 #include "../onegin_headers/onegin_structs.h"
 #include "../onegin_headers/main_functions.h"
+#include "../onegin_headers/file_input.h"
 
 
-int main(void)
-{
-    //func with argv
-    const char* fonegin_read  = "onegin_first_try.txt";
-    const char* fonegin_write = "sorted_onegin.txt";
-
-    FILE* onegin_unsorted_text = fopen(fonegin_read,  "r");
-    memory_fault_error_checker(onegin_unsorted_text, __LINE__);
-
-    FILE* onegin_sorted_text = fopen(fonegin_write, "w");
-    memory_fault_error_checker(onegin_sorted_text, __LINE__);
-
-
-    struct Onegin_Arrays data_arrays =
+struct Onegin_Arrays data_arrays =
     {
         .strings_ptrs  = nullptr,
         .my_buffer     = nullptr,
@@ -41,13 +29,35 @@ int main(void)
         .str_nums    = 0,
         .symbols_num = 0
     };
-    
-    symbols_number(&data_vars, onegin_unsorted_text);
+
+    struct Onegin_Files_Attributes data_files = 
+    {
+        .file_read  =  nullptr,
+        .file_write =  nullptr,
+        .first_file_index =  0,
+        .second_file_index = 0
+    };
+
+
+int main(int argc, char* argv[])
+{
+    //more functions!
+    // for(size_t index; index < argc; index++)
+    // {
+    //     strtchr();
+    // }
+
+    file_read_open(&data_files, &argv[1]); //cant open file to read, fix
+        
+    data_vars.symbols_num = symbols_number(data_files);
+    printf("symbols_num %lu\n", data_vars.symbols_num);
 
     symbols_num_check(&data_vars);
 
-    my_buffer_create(&data_arrays, &data_vars, onegin_unsorted_text);
+    my_buffer_create(&data_arrays, &data_vars, data_files.file_read);
 
+    my_file_close(data_files.file_read);
+    
     data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);
 
     dynamic_arrays_create(&data_arrays, &data_vars);
@@ -56,21 +66,27 @@ int main(void)
 
     ptrs_array_fill(data_vars, &data_arrays);
 
+     printf("\n\n"
+            "unsorted\n\n");
+
     output_array(data_vars, &data_arrays);
 
-    printf("\n\n");
+     printf("\n\n"
+            "sorted by first letters\n\n");
 
     bubble_sort(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1); //my_sort should be here
 
     output_array(data_vars, &data_arrays);
 
-    printf("\n\n");
+    printf("\n\n"
+           "sorted from the start\n\n");
 
-    // my_sort(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1);
+    my_sort(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1);
 
-    // output_array(data_vars, &data_arrays);
+    output_array(data_vars, &data_arrays);
 
-    // printf("\n\n");
+     printf("\n\n"
+            "sorted from the end\n\n");
 
     my_sort_end(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1);
 
@@ -78,17 +94,16 @@ int main(void)
 
     printf("\n\n");
 
-    fill_sorted_file(&data_arrays, data_vars, onegin_sorted_text);
+    file_write_open(&data_files, argv[3]);
+
+    fill_sorted_file(&data_arrays, data_vars, data_files.file_write);
     
     mem_free(&data_arrays);
 
-    my_file_close(onegin_unsorted_text);
-    
-    my_file_close(onegin_sorted_text);
+    my_file_close(data_files.file_write);
     
     return 0;
 }
 
-
-//TODO - // strcmp с конца организовать сортировку (сначала по началу, потом по концу строки) my_sort
+//TODO - 
 

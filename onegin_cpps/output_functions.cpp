@@ -17,13 +17,13 @@ void_sex output_array(const Onegin_Variables data_variables, const Onegin_Arrays
 void_sex memory_fault_error_checker(const void* data, size_t line)
 {
     if(data == nullptr)
-        {
-            printf("not enough memory to do actions in %p, lol\n\n", data);
-        }
+    {
+        printf("not enough memory to do actions in %p, lol\n\n", data);
+    }
 }
 
 void_sex my_file_close(FILE* data)
 {
     if(fclose(data))
-        printf("error in fclose\n\n");
+        fprintf(stderr, "error in fclose\n\n");
 }
