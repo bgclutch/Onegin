@@ -7,12 +7,13 @@
 #include "../onegin_headers/output_functions.h"
 #include "../onegin_headers/main_functions.h"
 
-size_t symbols_number(Onegin_Files_Attributes data_files)
+size_t symbols_number(Onegin_Files_Attributes *data_files)
 {
-    assert(data_files.file_read && "pososal huyaku");
-    fseek(data_files.file_read, 0, SEEK_END);
-    size_t result = (size_t)ftell(data_files.file_read);//number of symbols
-    fseek(data_files.file_read, 0, SEEK_SET);
+    assert(data_files->file_read && "pososal huyaku");
+    fseek(data_files->file_read, 0, SEEK_END);
+    size_t result = (size_t)ftell(data_files->file_read);//number of symbols
+    fseek(data_files->file_read, 0, SEEK_SET);
+    fprintf(stderr, "result %lu\n", result);
 
     return result;
 }
@@ -33,21 +34,25 @@ void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_var
     memory_fault_error_checker(data_arrays->my_buffer, "my_buffer", "my_buffer_create");
 
     fread(data_arrays->my_buffer, sizeof(char), data_vars->symbols_num, file_name);
+    for (size_t i = 0; i < data_vars->symbols_num; i++) {
+        fprintf(stderr, "%x\n", data_arrays->my_buffer[i]);
+    }
 }
 
 
-void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables *data_vars)
+void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars)
 {
-    data_arrays->strings_ptrs  = (char**) calloc(data_vars->str_nums, sizeof(char*)); //array of pointers to strings
+    assert(data_vars.str_nums && "paeli");
+    data_arrays->strings_ptrs  = (char**) calloc(data_vars.str_nums, sizeof(char*)); //array of pointers to strings
     memory_fault_error_checker(data_arrays->strings_ptrs, "strings_ptrs", "dynamic_arrays_create");
 
-    data_arrays->strings_sizes = (size_t*) calloc(data_vars->str_nums, sizeof(size_t)); //array of sizes
+    data_arrays->strings_sizes = (size_t*) calloc(data_vars.str_nums, sizeof(size_t)); //array of sizes
     memory_fault_error_checker(data_arrays->strings_sizes, "strings_sizes", "dynamic_arrays_create");
 
-    data_arrays->strings_nums  = (size_t*) calloc(data_vars->str_nums ,sizeof(size_t)); //array of string positions
+    data_arrays->strings_nums  = (size_t*) calloc(data_vars.str_nums ,sizeof(size_t)); //array of string positions
     memory_fault_error_checker(data_arrays->strings_nums, "strings_nums", "dynamic_arrays_create");
 
-    data_arrays->running_sum   = (size_t*) calloc(data_vars->str_nums, sizeof(size_t)); //running sum array
+    data_arrays->running_sum   = (size_t*) calloc(data_vars.str_nums, sizeof(size_t)); //running sum array
     memory_fault_error_checker(data_arrays->running_sum, "running_sum", "dynamic_arrays_create");
 }
 

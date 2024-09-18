@@ -49,20 +49,29 @@ int main(int argc, char* argv[])
 
     file_read_open(&data_files, &argv[1]); //cant open file to read, fix
         
-    data_vars.symbols_num = symbols_number(data_files);
+    data_vars.symbols_num = symbols_number(&data_files);
     printf("symbols_num %lu\n", data_vars.symbols_num);
 
     symbols_num_check(&data_vars);
 
+    fprintf(stderr, "symbols num %lu\n", data_vars.symbols_num);
+
     my_buffer_create(&data_arrays, &data_vars, data_files.file_read);
+
+    for(size_t i = 0; i < data_vars.symbols_num; i++)
+    {
+        printf("%d ", data_arrays.my_buffer[i]);
+        if(data_arrays.my_buffer[i] == '\0')
+            printf(" penis was found ");
+    }
 
     my_file_close(data_files.file_read);
     
     data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);
     printf("pisa popa\n");
-    printf("str_nums %lu", data_vars.str_nums);
+    fprintf(stderr, "str_nums %lu\n", data_vars.str_nums);
 
-    dynamic_arrays_create(&data_arrays, &data_vars);
+    dynamic_arrays_create(&data_arrays, data_vars);
 
     string_nums_and_sizes(data_vars, &data_arrays);
 

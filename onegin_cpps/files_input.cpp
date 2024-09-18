@@ -6,7 +6,7 @@
 
 void_sex file_read_open(Onegin_Files_Attributes *data_files, char *argv[1])
 {
-    data_files->file_read = fopen(argv[1],  "r");
+    data_files->file_read = fopen(argv[1],  "rb");
     memory_fault_error_checker(data_files->file_read, "file_read", "file_read_open"); //strrchr
     printf("file_read address %p\n", data_files->file_read);
 }
