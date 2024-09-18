@@ -52,8 +52,8 @@ size_t my_string_comparer_from_end(const char* str_1, const char* str_2)
     size_t len_1 = my_strlen(str_1);
     size_t len_2 = my_strlen(str_2);
 
-    size_t ind_str_1 = len_1;
-    size_t ind_str_2 = len_2;
+    size_t ind_str_1 = len_1 - 1;
+    size_t ind_str_2 = len_2 - 1;
     size_t result = 0;
 
     while((ind_str_1 > 0) && (ind_str_2 > 0) && (result == CONTINUE_COMPARE))

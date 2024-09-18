@@ -32,7 +32,7 @@ void_sex symbols_num_check(const Onegin_Variables data_vars)
 
 void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, FILE* file_name)
 {
-    data_arrays->my_buffer = (char*) calloc(data_vars.symbols_num, sizeof(char));
+    data_arrays->my_buffer = (char*) calloc(data_vars.symbols_num + 1, sizeof(char));
     memory_fault_error_checker(data_arrays->my_buffer, "my_buffer", "my_buffer_create");
 
     fread(data_arrays->my_buffer, sizeof(char), data_vars.symbols_num, file_name);
@@ -93,7 +93,11 @@ void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_a
 void_sex fill_sorted_file(Onegin_Arrays *data_ararys, const Onegin_Variables data_vars, FILE* file_outp)
 {
     for(size_t index = 0; index < data_vars.str_nums; index++)
+    {
         fputs(data_ararys->strings_ptrs[index], file_outp);
+        putc('\n', file_outp);
+    }
+
 }
 
 

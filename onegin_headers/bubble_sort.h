@@ -3,10 +3,8 @@
 
 #include "../onegin_headers/onegin_structs.h"
 
-void_sex bubble_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size);
+void_sex my_sort(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars);
 
-void_sex my_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size);
-
-void_sex my_sort_end(char** array, size_t* string_size, size_t* string_num, size_t arr_size);
+void_sex my_sort_end(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars);
 
 #endif //BUBBLE_SORT_H_

@@ -12,69 +12,39 @@
 
 //typedef; 
 
-void_sex bubble_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size)
-{   
-    assert(&array[0][0]);
-    assert(string_size);
-    assert(string_num);
+void_sex my_sort(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars)
+{       
+    size_t result = 0;
 
-    for(size_t j = 0; j < arr_size; j++) //sort letters by alphabet
+    for(size_t j = 0; j < data_vars.str_nums - 1; j++) //sort from second letter
     {   
-        for(size_t i = 0; i < arr_size - j; i++)
+        for(size_t i = 0; i < data_vars.str_nums - j - 1; i++)
         {
-            if(tolower(array[i][0]) > tolower(array[i + 1][0]))
+            result = my_string_comparer_from_start(data_arrays->strings_ptrs[i], data_arrays->strings_ptrs[i + 1]);
+            if(result == SWAP_STRINGS)
             {
-                my_swap(&array[i], &array[i + 1], sizeof(*array)); 
-                my_swap(&string_size[i], &string_size[i + 1], sizeof(*string_size)); 
-                my_swap(&string_num[i], &string_num[i + 1], sizeof(*string_num));
+                my_swap(&data_arrays->strings_ptrs[i], &data_arrays->strings_ptrs[i + 1], sizeof(*data_arrays->strings_ptrs)); 
+                my_swap(&data_arrays->strings_sizes[i], &data_arrays->strings_sizes[i + 1], sizeof(*data_arrays->strings_sizes)); 
+                my_swap(&data_arrays->strings_nums[i], &data_arrays->strings_nums[i + 1], sizeof(*data_arrays->strings_nums));
             }
         }
     }
 }
 
-
-
-void_sex my_sort(char** array, size_t* string_size, size_t* string_num, size_t arr_size)
+void_sex my_sort_end(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars)
 {   
-    assert(&array[0][0]);
-    assert(string_size);
-    assert(string_num);
-    
     size_t result = 0;
 
-    for(size_t j = 0; j < arr_size - 1; j++) //sort from second letter
+    for(size_t j = 0; j < data_vars.str_nums - 1; j++) //sort from second letter
     {   
-        for(size_t i = 0; i < arr_size - j; i++)
+        for(size_t i = 0; i < data_vars.str_nums - j - 1; i++)
         {
-            result = my_string_comparer_from_start(array[i], array[i + 1]);
+            result = my_string_comparer_from_end(data_arrays->strings_ptrs[i], data_arrays->strings_ptrs[i + 1]);
             if(result == SWAP_STRINGS)
             {
-                my_swap(&array[i], &array[i + 1], sizeof(*array)); 
-                my_swap(&string_size[i], &string_size[i + 1], sizeof(*string_size)); //CHECK IT!!
-                my_swap(&string_num[i], &string_num[i + 1], sizeof(*string_num));
-            }
-        }
-    }
-}
-
-void_sex my_sort_end(char** array, size_t* string_size, size_t* string_num, size_t arr_size)
-{   
-    assert(&array[0][0]);
-    assert(string_size);
-    assert(string_num);
-    
-    size_t result = 0;
-
-    for(size_t j = 0; j < arr_size - 1; j++) //sort from second letter
-    {   
-        for(size_t i = 0; i < arr_size - j; i++)
-        {
-            result = my_string_comparer_from_end(array[i], array[i + 1]);
-            if(result == SWAP_STRINGS)
-            {
-                my_swap(&array[i], &array[i + 1], sizeof(*array)); 
-                my_swap(&string_size[i], &string_size[i + 1], sizeof(*string_size)); //CHECK IT!!
-                my_swap(&string_num[i], &string_num[i + 1], sizeof(*string_num));
+                my_swap(&data_arrays->strings_ptrs[i], &data_arrays->strings_ptrs[i + 1], sizeof(*data_arrays->strings_ptrs)); 
+                my_swap(&data_arrays->strings_sizes[i], &data_arrays->strings_sizes[i + 1], sizeof(*data_arrays->strings_sizes)); 
+                my_swap(&data_arrays->strings_nums[i], &data_arrays->strings_nums[i + 1], sizeof(*data_arrays->strings_nums));
             }
         }
     }
