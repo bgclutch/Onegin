@@ -8,7 +8,7 @@
 
 void_sex output_array(const Onegin_Variables data_variables, const Onegin_Arrays *data_arrays);
 
-void_sex memory_fault_error_checker(const void* data, size_t line);
+void_sex memory_fault_error_checker(const void* data, const char* name, const char* func);
 
 void_sex my_file_close(FILE* data);
 

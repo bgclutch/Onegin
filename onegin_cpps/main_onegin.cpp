@@ -59,6 +59,8 @@ int main(int argc, char* argv[])
     my_file_close(data_files.file_read);
     
     data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);
+    printf("pisa popa\n");
+    printf("str_nums %lu", data_vars.str_nums);
 
     dynamic_arrays_create(&data_arrays, &data_vars);
 
@@ -66,12 +68,12 @@ int main(int argc, char* argv[])
 
     ptrs_array_fill(data_vars, &data_arrays);
 
-     printf("\n\n"
+    printf("\n\n"
             "unsorted\n\n");
 
     output_array(data_vars, &data_arrays);
 
-     printf("\n\n"
+    printf("\n\n"
             "sorted by first letters\n\n");
 
     bubble_sort(data_arrays.strings_ptrs, data_arrays.strings_sizes, data_arrays.strings_nums, data_vars.str_nums - 1); //my_sort should be here
@@ -94,7 +96,7 @@ int main(int argc, char* argv[])
 
     printf("\n\n");
 
-    file_write_open(&data_files, argv[3]);
+    file_write_open(&data_files, argv[2]);
 
     fill_sorted_file(&data_arrays, data_vars, data_files.file_write);
     

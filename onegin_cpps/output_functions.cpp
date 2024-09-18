@@ -14,11 +14,11 @@ void_sex output_array(const Onegin_Variables data_variables, const Onegin_Arrays
 }
 
 
-void_sex memory_fault_error_checker(const void* data, size_t line)
+void_sex memory_fault_error_checker(const void* data, const char* name, const char* func)
 {
     if(data == nullptr)
     {
-        printf("not enough memory to do actions in %p, lol\n\n", data);
+        printf("not enough memory to do actions with %s in %s, lol\n\n", name, func);
     }
 }
 
