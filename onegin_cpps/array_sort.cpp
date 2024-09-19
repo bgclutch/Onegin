@@ -104,24 +104,24 @@ int my_string_comparer_from_end(const char* str_1, const char* str_2, size_t len
 }
 
 
-void_sex sort_arrays(Onegin_Variables data_vars, Onegin_Arrays *data_arrays)
+void_sex sort_arrays(Onegin_Variables *data_vars, Onegin_Arrays *data_arrays)
 {
     printf("\n\n"
             "unsorted\n\n");
 
-    output_array(data_vars, data_arrays);
+    output_array(*data_vars, data_arrays);
 
     printf("\n\n"
            "sorted from the start\n\n");
 
-    my_sort(data_arrays, data_vars);
+    my_sort(data_arrays, *data_vars);
 
-    output_array(data_vars, data_arrays);
+    output_array(*data_vars, data_arrays);
 
      printf("\n\n"
             "sorted from the end\n\n");
 
-    my_sort_end(data_arrays, data_vars);
+    my_sort_end(data_arrays, *data_vars);
 
-    output_array(data_vars, data_arrays);
+    output_array(*data_vars, data_arrays);
 }

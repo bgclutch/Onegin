@@ -38,14 +38,17 @@ struct Onegin_Files_Attributes data_files =
 
 int main(int argc, char* argv[])
 {
-    if(input_is_correct(argc, &argv[0]))
+    if(input_is_correct(argc))
     {
-        complete_array_of_ptrs(data_vars, &data_arrays, &data_files, argv[1]);
+        complete_array_of_ptrs(&data_vars, &data_arrays, &data_files, argv[1]);
     
-        sort_arrays(data_vars, &data_arrays);
+        sort_arrays(&data_vars, &data_arrays);
 
-        compete_outp_array(data_vars, &data_arrays, &data_files, argv[2]);   
+        compete_outp_array(&data_vars, &data_arrays, &data_files, argv[2]);   
+        
+        printf("\nthanks for work!\n");
     }
     
+    printf("good luck!\n");
     return 0;
 }

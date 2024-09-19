@@ -31,12 +31,12 @@ void_sex my_file_close(FILE* data)
 }
 
 
-void_sex compete_outp_array(Onegin_Variables data_vars, Onegin_Arrays *data_arrays,
+void_sex compete_outp_array(Onegin_Variables *data_vars, Onegin_Arrays *data_arrays,
                             Onegin_Files_Attributes *data_files, const char* name_string)
 {
     file_write_open(data_files, name_string);
 
-    fill_sorted_file(data_arrays, data_vars, data_files->file_write);
+    fill_sorted_file(data_arrays, *data_vars, data_files->file_write);
     
     mem_free(data_arrays);
 

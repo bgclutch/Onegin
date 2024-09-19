@@ -98,8 +98,6 @@ void_sex count_prefix_sum(const Onegin_Variables data_vars, Onegin_Arrays *data_
     {
         data_arrays->prefix_sum[str_n] = data_arrays->prefix_sum[str_n - 1] + data_arrays->strings_sizes[str_n - 1]; 
     }
-    for(size_t str_n = 0; str_n < data_vars.str_nums; str_n++)
-        printf("running sum %lu %lu\n", str_n, data_arrays->prefix_sum[str_n]);
 }
 
 
