@@ -12,4 +12,7 @@ void_sex memory_fault_error_checker(const void* data, const char* name, const ch
 
 void_sex my_file_close(FILE* data);
 
+void_sex compete_outp_array(Onegin_Variables data_vars, Onegin_Arrays *data_arrays,
+                            Onegin_Files_Attributes *data_files, const char* name_string);
+
 #endif //OUTPUT_FUNCTIONS_H_

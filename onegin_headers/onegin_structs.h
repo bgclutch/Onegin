@@ -22,7 +22,7 @@ struct Onegin_Arrays
     char*       my_buffer;
     size_t* strings_sizes;
     size_t*  strings_nums;
-    size_t*   running_sum;
+    size_t*   prefix_sum;
 };
 
 struct Onegin_Variables

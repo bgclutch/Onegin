@@ -7,6 +7,9 @@ void_sex file_read_open(Onegin_Files_Attributes *data_files, const char *file_re
 
 void_sex file_write_open(Onegin_Files_Attributes *data_files, const char* file_write_open);
 
-//void_sex file_index_finder(Onegin_Files_Attributes *data_files, const char* const* const argv);
+void_sex complete_array_of_ptrs(Onegin_Variables data_vars, Onegin_Arrays *data_arrays,
+                                Onegin_Files_Attributes *data_files, const char* name_string);
+
+bool input_is_correct(const int argc, const char* const* const argv);
 
 #endif //FILE_INPUT_H_

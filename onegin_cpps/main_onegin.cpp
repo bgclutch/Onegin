@@ -19,7 +19,7 @@ struct Onegin_Arrays data_arrays =
     .my_buffer     = nullptr,
     .strings_sizes = nullptr,
     .strings_nums  = nullptr,
-    .running_sum   = nullptr
+    .prefix_sum   = nullptr
 };
 
 struct Onegin_Variables data_vars =
@@ -36,66 +36,16 @@ struct Onegin_Files_Attributes data_files =
     .second_file_index = 0
 };
 
-
 int main(int argc, char* argv[])
 {
-    //more functions!
-    // for(size_t index; index < argc; index++)
-    // {
-    //     strtchr();
-    // }
-
- 
-    file_read_open(&data_files, argv[1]); //cant open file to read, fix
-        
-    data_vars.symbols_num = symbols_number(&data_files);
-
-    symbols_num_check(data_vars);
-
-    my_buffer_create(&data_arrays, data_vars, data_files.file_read);
-
-    my_file_close(data_files.file_read);
+    if(input_is_correct(argc, &argv[0]))
+    {
+        complete_array_of_ptrs(data_vars, &data_arrays, &data_files, argv[1]);
     
-    data_vars.str_nums = num_of_str(&data_arrays, data_vars.symbols_num);
+        sort_arrays(data_vars, &data_arrays);
 
-    dynamic_arrays_create(&data_arrays, data_vars);
-
-    string_nums_and_sizes(data_vars, &data_arrays);
-
-    ptrs_array_fill(data_vars, &data_arrays);
-    //func
-    
-    printf("\n\n"
-            "unsorted\n\n");
-
-    output_array(data_vars, &data_arrays);
-
-    // printf("\n\n"
-    //        "sorted from the start\n\n");
-
-    // my_sort(&data_arrays, data_vars);
-
-    // output_array(data_vars, &data_arrays);
-
-     printf("\n\n"
-            "sorted from the end\n\n");
-
-    my_sort_end(&data_arrays, data_vars);
-
-    output_array(data_vars, &data_arrays);
-
-    printf("\n\n");
-
-    file_write_open(&data_files, argv[2]);
-
-    fill_sorted_file(&data_arrays, data_vars, data_files.file_write);
-    
-    mem_free(&data_arrays);
-
-    my_file_close(data_files.file_write);
+        compete_outp_array(data_vars, &data_arrays, &data_files, argv[2]);   
+    }
     
     return 0;
 }
-
-//TODO - 
-
