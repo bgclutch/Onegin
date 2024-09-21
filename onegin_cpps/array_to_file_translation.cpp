@@ -32,6 +32,7 @@ void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars
     memory_fault_error_checker(data_arrays->my_buffer, "my_buffer", "my_buffer_create");
 
     fread(data_arrays->my_buffer, sizeof(char), data_vars.symbols_num, file_name);
+    data_arrays->my_buffer[data_vars.symbols_num] = '\0';
 }
 
 
@@ -77,7 +78,7 @@ void_sex string_nums_and_sizes(const Onegin_Variables data_vars, Onegin_Arrays *
     {
         size_t counter = 0;
 
-        while(data_arrays->my_buffer[index] != '\0' && index < data_vars.symbols_num)//1 strings conter 2 buffer checker
+        while(data_arrays->my_buffer[index] != '\0' && index < data_vars.symbols_num)//1 strings counter 2 buffer checker
         {
             counter++;
             index++;

@@ -3,9 +3,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <string.h>
 
-#include "../onegin_headers/my_swap.h"
 #include "../onegin_headers/array_sort.h"
 #include "../onegin_headers/output_functions.h"
 #include "../onegin_headers/onegin_structs.h"
@@ -42,7 +40,19 @@ int main(int argc, char* argv[])
     {
         complete_array_of_ptrs(&data_vars, &data_arrays, &data_files, argv[1]);
     
-        sort_arrays(&data_vars, &data_arrays);
+        printf("\n\n"
+               "unsorted text\n\n");
+
+        output_array(data_vars, &data_arrays);
+
+        printf("\n\n"
+           "sorted from the start quick\n\n");
+
+        my_qsort(&data_arrays, sizeof(char*), 0, data_vars.str_nums);
+
+        output_array(data_vars, &data_arrays);
+
+        //sort_arrays(&data_vars, &data_arrays);
 
         compete_outp_array(&data_vars, &data_arrays, &data_files, argv[2]);   
         
