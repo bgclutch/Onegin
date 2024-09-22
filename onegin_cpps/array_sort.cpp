@@ -139,9 +139,9 @@ void_sex my_qsort(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, size_t
         size_t part_res = partition(data_arrays, type_size, left, right);
 
         fprintf(stderr, YELLOW_TEXT("first if TEXT BEFORE LEFT SIDE SORT\n") RED_TEXT("left %lu   part res %lu  right %lu\n\n"), left, part_res, right);
-        my_qsort(data_arrays, data_vars, type_size, left, part_res + 1);//left side 3 if's (start ready || med ready || end ready)
+        my_qsort(data_arrays, data_vars, type_size, left, part_res);//left side 3 if's (start ready || med ready || end ready)
         fprintf(stderr, YELLOW_TEXT("TEXT BEFORE RIGHT SIDE SORT\n"));
-        my_qsort(data_arrays, data_vars, type_size, part_res + 1, right);//right side
+        my_qsort(data_arrays, data_vars, type_size, part_res, right);//right side
     }
      
 }
@@ -160,7 +160,8 @@ size_t partition(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size
     else
     {
         size_t pivot = (left + right) / 2; //FIXME ASSERTS
-        int result = 0;
+        int result_l = 0;
+        int result_r = 0;
 
         
         for(; index_left <= pivot; index_left++)
@@ -187,23 +188,21 @@ size_t partition(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size
                 }
             }
 
-            while(result <= 0 && index_left != pivot)
+            while(result_l <= 0 && index_left != pivot)
             {
-                result = my_string_comparer_from_start(data_arrays->strings_ptrs[index_left], data_arrays->strings_ptrs[pivot], 
+                result_l = my_string_comparer_from_start(data_arrays->strings_ptrs[index_left], data_arrays->strings_ptrs[pivot], 
                                                     data_arrays->strings_sizes[index_left], data_arrays->strings_sizes[pivot]);
                 index_left++;
             }
-            while(result > 0 && index_right != pivot)
+            while(result_r > 0 && index_right != pivot)
             {
-                result = my_string_comparer_from_start(data_arrays->strings_ptrs[pivot], data_arrays->strings_ptrs[index_right], 
+                result_r = my_string_comparer_from_start(data_arrays->strings_ptrs[pivot], data_arrays->strings_ptrs[index_right], 
                                                 data_arrays->strings_sizes[pivot], data_arrays->strings_sizes[index_right]);
                 index_right--;
             }
-            if(index_left >= index_right)
-                break;
-            printf("compare result " GREEN_TEXT("%d ") "in " BLUE_TEXT("%lu iteration\n\n"), result, index_left);
+            printf("compare result l && r" GREEN_TEXT("%d %d\n"), result_l, result_r);
             
-            if(result > 0) //<?
+            if(result_l <= 0 && result_r > 0)
             {
                 printf(BLUE_TEXT("TEXT B4 SWAPS\n\n\n"));
                 //fprintf(stderr, YELLOW_TEXT("left string "   ) RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n"),     index_left, data_arrays->strings_ptrs[index_left]);
@@ -222,5 +221,5 @@ size_t partition(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size
     my_swap(&data_arrays->strings_nums [index_left], &data_arrays->strings_nums [pivot], sizeof(*data_arrays->strings_nums));
     }
     
-    return index_left - 1;
+    return index_left;
 }
