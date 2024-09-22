@@ -130,25 +130,48 @@ void_sex sort_arrays(Onegin_Variables *data_vars, Onegin_Arrays *data_arrays)
 }
 
 
-void_sex my_qsort(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size_t right)//main struct && comparer
+void_sex my_qsort(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, size_t type_size, size_t left, size_t right)//main struct && comparer
 {
-    if(right - left >= 1)
+    if(right - left <= 3)
+        my_sort(data_arrays, data_vars);
+    else
     {
-        size_t pivot = right - 1; //FIXME ASSERTS
+        size_t part_res = partition(data_arrays, type_size, left, right);
+
+        fprintf(stderr, YELLOW_TEXT("first if TEXT BEFORE LEFT SIDE SORT\n") RED_TEXT("left %lu   part res %lu  right %lu\n\n"), left, part_res, right);
+        my_qsort(data_arrays, data_vars, type_size, left, part_res + 1);//left side 3 if's (start ready || med ready || end ready)
+        fprintf(stderr, YELLOW_TEXT("TEXT BEFORE RIGHT SIDE SORT\n"));
+        my_qsort(data_arrays, data_vars, type_size, part_res + 1, right);//right side
+    }
+     
+}
+
+
+
+size_t partition(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size_t right)
+{
+    size_t index_left = left;
+    size_t index_right = right - 1;
+
+    if(right - left <= 1)
+    {
+        fprintf(stderr, "huynya peredelyvay     left %lu right %lu\n\n", left, right);  
+    }
+    else
+    {
+        size_t pivot = (left + right) / 2; //FIXME ASSERTS
         int result = 0;
 
-        size_t index_finder  = left;
-        size_t index_swapper = left;
         
-        for(size_t index_left = left; index_left <= pivot; index_left++)
+        for(; index_left <= pivot; index_left++)
         {
-            fprintf(stderr, "iteration %lu\n"
+            fprintf(stderr,
                     "pivot %lu\n"
-                    "left index " BLUE_TEXT("%lu\t") "right index " BLUE_TEXT("%lu\n")
-                    "index_finder " GREEN_TEXT("%lu\t") "index_swapper " GREEN_TEXT("%lu\n\n"), index_left,
-                     pivot, index_left, right, index_finder, index_swapper);
+                    "right index " BLUE_TEXT("%lu\n")
+                    "index_finder " GREEN_TEXT("%lu\t") "index_swapper " GREEN_TEXT("%lu\n\n"),
+                        pivot, right, index_left, index_right);
 
-            for(size_t i = 0; i < right; i++)
+            for(size_t i = 0; i <= pivot; i++)
             {
                 if(i < index_left)
                 {
@@ -164,44 +187,40 @@ void_sex my_qsort(Onegin_Arrays *data_arrays, size_t type_size, size_t left, siz
                 }
             }
 
-            if(index_left != pivot)
+            while(result <= 0 && index_left != pivot)
             {
                 result = my_string_comparer_from_start(data_arrays->strings_ptrs[index_left], data_arrays->strings_ptrs[pivot], 
-                                                       data_arrays->strings_sizes[index_left], data_arrays->strings_sizes[pivot]);
-                printf("compare result " GREEN_TEXT("%d ") "in " BLUE_TEXT("%lu iteration\n\n"), result, index_left);
+                                                    data_arrays->strings_sizes[index_left], data_arrays->strings_sizes[pivot]);
+                index_left++;
             }
-            if(result > 0) //>=?
+            while(result > 0 && index_right != pivot)
             {
-                fprintf(stderr, YELLOW_TEXT("index finder b4 increment %lu\n"), index_finder);
-                index_finder++;
-                fprintf(stderr, YELLOW_TEXT("index finder after increment %lu\n\n"), index_finder);
+                result = my_string_comparer_from_start(data_arrays->strings_ptrs[pivot], data_arrays->strings_ptrs[index_right], 
+                                                data_arrays->strings_sizes[pivot], data_arrays->strings_sizes[index_right]);
+                index_right--;
             }
-            if(result <= 0) //<?
+            if(index_left >= index_right)
+                break;
+            printf("compare result " GREEN_TEXT("%d ") "in " BLUE_TEXT("%lu iteration\n\n"), result, index_left);
+            
+            if(result > 0) //<?
             {
-                if(index_finder > index_swapper)
-                {
-                    printf(BLUE_TEXT("TEXT B4 SWAPS\n\n\n"));
-                    //fprintf(stderr, YELLOW_TEXT("left string "   ) RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n"),     index_left, data_arrays->strings_ptrs[index_left]);
-                    fprintf(stderr, YELLOW_TEXT("string finder " ) RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n"),     index_finder, data_arrays->strings_ptrs[index_finder]);
-                    fprintf(stderr, YELLOW_TEXT("string swapper ") RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n\n\n"), index_swapper, data_arrays->strings_ptrs[index_swapper]);
+                printf(BLUE_TEXT("TEXT B4 SWAPS\n\n\n"));
+                //fprintf(stderr, YELLOW_TEXT("left string "   ) RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n"),     index_left, data_arrays->strings_ptrs[index_left]);
+                fprintf(stderr, YELLOW_TEXT("string finder " ) RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n"),     index_left, data_arrays->strings_ptrs[index_left]);
+                fprintf(stderr, YELLOW_TEXT("string swapper ") RED_TEXT("index %lu\n") YELLOW_TEXT("%s\n\n\n"), index_left, data_arrays->strings_ptrs[index_right]);
 
-                    my_swap(&data_arrays->strings_ptrs [index_finder], &data_arrays->strings_ptrs [index_swapper], sizeof(*data_arrays->strings_ptrs)); 
-                    my_swap(&data_arrays->strings_sizes[index_finder], &data_arrays->strings_sizes[index_swapper], sizeof(*data_arrays->strings_sizes)); 
-                    my_swap(&data_arrays->strings_nums [index_finder], &data_arrays->strings_nums [index_swapper], sizeof(*data_arrays->strings_nums));
-                    index_swapper++;
-                    index_finder++;
-                    fprintf(stderr, "index swapper %lu  index finder %lu\n\n", index_swapper, index_finder);
-                }
+                my_swap(&data_arrays->strings_ptrs [index_left], &data_arrays->strings_ptrs [index_right], sizeof(*data_arrays->strings_ptrs)); 
+                my_swap(&data_arrays->strings_sizes[index_left], &data_arrays->strings_sizes[index_right], sizeof(*data_arrays->strings_sizes)); 
+                my_swap(&data_arrays->strings_nums [index_left], &data_arrays->strings_nums [index_right], sizeof(*data_arrays->strings_nums));
+                index_right--;
+                fprintf(stderr, "index swapper %lu  index finder %lu\n\n", index_right, index_left);
             }
-        }      
-        fprintf(stderr, YELLOW_TEXT("TEXT BEFORE LEFT SIDE SORT\n") RED_TEXT("left %lu   index swapper %lu  right %lu\n\n"), left, index_swapper, right);
-        my_qsort(data_arrays, type_size, left, index_swapper);//left side
-        fprintf(stderr, YELLOW_TEXT("TEXT BEFORE RIGHT SIDE SORT\n"));
-        my_qsort(data_arrays, type_size, index_swapper + 1, right);//right side
+        }
+    my_swap(&data_arrays->strings_ptrs [index_left], &data_arrays->strings_ptrs [pivot], sizeof(*data_arrays->strings_ptrs)); 
+    my_swap(&data_arrays->strings_sizes[index_left], &data_arrays->strings_sizes[pivot], sizeof(*data_arrays->strings_sizes)); 
+    my_swap(&data_arrays->strings_nums [index_left], &data_arrays->strings_nums [pivot], sizeof(*data_arrays->strings_nums));
     }
-    else
-    {
-        fprintf(stderr, "huynya peredelyvay     left %lu right %lu\n\n", left, right);
-    }   
-        
+    
+    return index_left - 1;
 }

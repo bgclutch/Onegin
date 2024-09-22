@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
         printf("\n\n"
            "sorted from the start quick\n\n");
 
-        my_qsort(&data_arrays, sizeof(char*), 0, data_vars.str_nums);
+        my_qsort(&data_arrays, data_vars, sizeof(char*), 0, data_vars.str_nums);
 
         output_array(data_vars, &data_arrays);
 
