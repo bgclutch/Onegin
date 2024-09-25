@@ -3,7 +3,9 @@
 
 #include "../onegin_headers/onegin_structs.h"
 
-void_sex my_sort(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars);
+size_t my_strlen(const char* arr);
+
+void_sex my_sort(Onegin_Arrays *data_arrays, size_t left, size_t right);
 
 void_sex my_sort_end(Onegin_Arrays *data_arrays, const Onegin_Variables data_vars);
 
@@ -13,8 +15,8 @@ int my_string_comparer_from_end(const char* str_1, const char* str_2, size_t len
 
 void_sex sort_arrays(Onegin_Variables *data_vars, Onegin_Arrays *data_arrays);
 
-void_sex my_qsort(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, size_t type_size, size_t left, size_t right);//main struct && comparer
+void_sex my_qsort(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size_t right);//main struct && comparer
 
-size_t partition(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size_t right);
+//size_t partition(Onegin_Arrays *data_arrays, size_t type_size, size_t left, size_t right);
 
 #endif //BUBBLE_SORT_H_

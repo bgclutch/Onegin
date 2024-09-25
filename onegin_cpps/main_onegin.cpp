@@ -17,7 +17,7 @@ struct Onegin_Arrays data_arrays =
     .my_buffer     = nullptr,
     .strings_sizes = nullptr,
     .strings_nums  = nullptr,
-    .prefix_sum   = nullptr
+    .prefix_sum    = nullptr
 };
 
 struct Onegin_Variables data_vars =
@@ -39,20 +39,8 @@ int main(int argc, char* argv[])
     if(input_is_correct(argc))
     {
         complete_array_of_ptrs(&data_vars, &data_arrays, &data_files, argv[1]);
-    
-        printf("\n\n"
-               "unsorted text\n\n");
 
-        output_array(data_vars, &data_arrays);
-
-        printf("\n\n"
-           "sorted from the start quick\n\n");
-
-        my_qsort(&data_arrays, data_vars, sizeof(char*), 0, data_vars.str_nums);
-
-        output_array(data_vars, &data_arrays);
-
-        //sort_arrays(&data_vars, &data_arrays);
+        sort_arrays(&data_vars, &data_arrays);
 
         compete_outp_array(&data_vars, &data_arrays, &data_files, argv[2]);   
         
