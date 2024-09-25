@@ -26,21 +26,30 @@ typedef void void_sex;
 //     NOT_SWAP_STRINGS = 2
 // };
 
-
-struct Onegin_Arrays
+struct Onegin_General_Data
 {
-    char**   strings_ptrs;
-    char*       my_buffer;
-    size_t* strings_sizes;
-    size_t*  strings_nums;
-    size_t*   prefix_sum;
+    const char* string_ptr;
+    size_t     string_size;
+    size_t      string_num;
+    size_t      prefix_sum;
 };
 
 struct Onegin_Variables
 {
-    size_t       str_nums;
-    size_t    symbols_num;
+    char*    my_buffer;
+    size_t    str_nums;
+    size_t symbols_num;
 };
+
+
+// struct Onegin_Arrays
+// {
+//     char**   strings_ptrs;
+//     char*       my_buffer;
+//     size_t* strings_sizes;
+//     size_t*  strings_nums;
+//     size_t*   prefix_sum;
+// };
 
 struct Onegin_Files_Attributes
 {

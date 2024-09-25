@@ -17,35 +17,35 @@ size_t symbols_number(Onegin_Files_Attributes *data_files)
 }
 
 
-void_sex symbols_num_check(const Onegin_Variables data_vars)
+void_sex symbols_num_check(const size_t symbols_num)
 {
-    if(data_vars.symbols_num == 0)      
+    if(symbols_num == 0)      
     {
         printf("fill your file better, lol\n\n"); 
     }
 }
 
 
-void_sex my_buffer_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars, FILE* file_name)
+void_sex my_buffer_create(Onegin_Variables *data_vars, size_t symbols_num, FILE* file_name)
 {
-    data_arrays->my_buffer = (char*) calloc(data_vars.symbols_num + 1, sizeof(char));
-    memory_fault_error_checker(data_arrays->my_buffer, "my_buffer", "my_buffer_create");
+    data_vars->my_buffer = (char*) calloc(symbols_num + 1, sizeof(char));
+    memory_fault_error_checker(data_vars->my_buffer, "my_buffer", "my_buffer_create");
 
-    fread(data_arrays->my_buffer, sizeof(char), data_vars.symbols_num, file_name);
-    data_arrays->my_buffer[data_vars.symbols_num] = '\0';
+    fread(data_vars->my_buffer, sizeof(char), symbols_num, file_name);
+    data_vars->my_buffer[symbols_num] = '\0';
 }
 
 
-size_t num_of_str(Onegin_Arrays *data_arrays, size_t file_size)
+size_t num_of_str(char* my_buffer, const size_t symbols_num)
 {
-    assert(data_arrays->my_buffer && "norm");
+    assert(my_buffer && "norm");
 
     size_t counter_str = 0;
-    for(size_t index = 0; index < file_size; index++)
+    for(size_t index = 0; index < symbols_num; index++)
     {
-        if(data_arrays->my_buffer[index] == '\n')
+        if(my_buffer[index] == '\n')
         {
-            data_arrays->my_buffer[index] = '\0';
+            my_buffer[index] = '\0';
             counter_str++;
         }
     }
@@ -53,81 +53,69 @@ size_t num_of_str(Onegin_Arrays *data_arrays, size_t file_size)
 }
 
 
-
-void_sex dynamic_arrays_create(Onegin_Arrays *data_arrays, Onegin_Variables data_vars)
-{
-    data_arrays->strings_ptrs  = (char**) calloc(data_vars.str_nums, sizeof(char*)); //array of pointers to strings
-    memory_fault_error_checker(data_arrays->strings_ptrs, "strings_ptrs", "dynamic_arrays_create");
-
-    data_arrays->strings_sizes = (size_t*) calloc(data_vars.str_nums, sizeof(size_t)); //array of sizes
-    memory_fault_error_checker(data_arrays->strings_sizes, "strings_sizes", "dynamic_arrays_create");
-
-    data_arrays->strings_nums  = (size_t*) calloc(data_vars.str_nums ,sizeof(size_t)); //array of string positions
-    memory_fault_error_checker(data_arrays->strings_nums, "strings_nums", "dynamic_arrays_create");
-
-    data_arrays->prefix_sum   = (size_t*) calloc(data_vars.str_nums, sizeof(size_t)); //running sum array
-    memory_fault_error_checker(data_arrays->prefix_sum, "running_sum", "dynamic_arrays_create");
-}
-
-
-void_sex string_nums_and_sizes(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays)
+void_sex string_nums_and_sizes(Onegin_Variables *data_vars, Onegin_General_Data *onegin_array)
 {    
     size_t index = 0;
-    data_arrays->prefix_sum[0] = 0;
-    for(size_t str_n = 0; str_n < data_vars.str_nums; str_n++)
+    for(size_t str_n = 0; str_n < data_vars->str_nums; str_n++)
     {
         size_t counter = 0;
 
-        while(data_arrays->my_buffer[index] != '\0' && index < data_vars.symbols_num)//1 strings counter 2 buffer checker
+        while(data_vars->my_buffer[index] != '\0' && index < data_vars->symbols_num)//1 strings counter 2 buffer checker
         {
             counter++;
             index++;
         }
         counter++;
         index++;
-        data_arrays->strings_nums[str_n] = str_n;
-        data_arrays->strings_sizes[str_n] = counter;
+        onegin_array[str_n].string_num  = str_n;
+        onegin_array[str_n].string_size = counter;
 
         counter = 0;
     }
 }
 
-void_sex count_prefix_sum(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays)
+void_sex count_prefix_sum(const Onegin_Variables data_vars, Onegin_General_Data *onegin_array)
 {
-    data_arrays->prefix_sum[0] = 0;
+    onegin_array[0].prefix_sum = 0;
     for(size_t str_n = 1; str_n < data_vars.str_nums; str_n++)
     {
-        data_arrays->prefix_sum[str_n] = data_arrays->prefix_sum[str_n - 1] + data_arrays->strings_sizes[str_n - 1]; 
+        onegin_array[str_n].prefix_sum = onegin_array[str_n - 1].prefix_sum + onegin_array[str_n - 1].string_size; 
     }
 }
 
 
-void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_Arrays *data_arrays)
+void_sex ptrs_array_fill(const Onegin_Variables data_vars, Onegin_General_Data *onegin_array, const char* my_buffer)
 {
     for(size_t i = 0; i < data_vars.str_nums; i++)
     {
-        data_arrays->strings_ptrs[i] = &(data_arrays->my_buffer[data_arrays->prefix_sum[i]]);
+        onegin_array[i].string_ptr = &(my_buffer[onegin_array[i].prefix_sum]);
     }
 }
 
 
-void_sex fill_sorted_file(Onegin_Arrays *data_ararys, const Onegin_Variables data_vars, FILE* file_outp)
+void_sex fill_sorted_file(Onegin_General_Data *onegin_array, const Onegin_Variables data_vars, Onegin_Files_Attributes *data_files)
 {
     for(size_t index = 0; index < data_vars.str_nums; index++)
     {
-        fputs(data_ararys->strings_ptrs[index], file_outp);
-        putc('\n', file_outp);
+        fputs(onegin_array[index].string_ptr, data_files->file_write);
+        putc('\n', data_files->file_write);
     }
 
 }
 
-
-void_sex mem_free(Onegin_Arrays *data_arrays)
+void_sex complete_array_of_ptrs(Onegin_General_Data *onegin_array, Onegin_Variables *data_vars)
 {
-    free(data_arrays->my_buffer);
-    free(data_arrays->strings_sizes);
-    free(data_arrays->strings_nums);
-    free(data_arrays->prefix_sum);
-    free(data_arrays->strings_ptrs);
+    string_nums_and_sizes(data_vars, onegin_array);
+
+    count_prefix_sum(*data_vars, onegin_array);
+
+    ptrs_array_fill(*data_vars, onegin_array, data_vars->my_buffer);
+}
+
+
+void_sex mem_free(Onegin_General_Data *onegin_array, char* my_buffer)
+{
+    free(onegin_array);
+    free(my_buffer);
 } 
 

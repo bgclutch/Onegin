@@ -11,39 +11,44 @@
 #include "../onegin_headers/files_input.h"
 
 
-struct Onegin_Arrays data_arrays =
-{
-    .strings_ptrs  = nullptr,
-    .my_buffer     = nullptr,
-    .strings_sizes = nullptr,
-    .strings_nums  = nullptr,
-    .prefix_sum    = nullptr
-};
+// struct Onegin_General_Data general_data =
+// {
+//     .string_ptr  = nullptr,
+//     .string_size =       0,
+//     .string_num  =       0,
+//     .prefix_sum  =       0
+// };
 
-struct Onegin_Variables data_vars =
+struct Onegin_Variables data_vars = 
 {
-    .str_nums    = 0,
-    .symbols_num = 0
+    .my_buffer   = nullptr,
+    .str_nums    =       0,
+    .symbols_num =       0
 };
 
 struct Onegin_Files_Attributes data_files = 
 {
     .file_read  =  nullptr,
     .file_write =  nullptr,
-    .first_file_index =  0,
+    .first_file_index  = 0,
     .second_file_index = 0
 };
 
+ 
 int main(int argc, char* argv[])
 {
     if(input_is_correct(argc))
     {
-        complete_array_of_ptrs(&data_vars, &data_arrays, &data_files, argv[1]);
+        data_vars.str_nums = string_nums_counter(&data_vars, &data_files, argv[1]);
 
-        sort_arrays(&data_vars, &data_arrays);
+        struct Onegin_General_Data *onegin_array = (Onegin_General_Data*) calloc(sizeof(Onegin_General_Data), data_vars.str_nums);
 
-        compete_outp_array(&data_vars, &data_arrays, &data_files, argv[2]);   
-        
+        complete_array_of_ptrs(onegin_array, &data_vars);
+
+        sort_arrays(&data_vars, onegin_array);
+
+        compete_outp_array(&data_vars, onegin_array, data_vars.my_buffer, &data_files, argv[2]);   
+
         printf("\nthanks for work!\n");
     }
     

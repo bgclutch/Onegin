@@ -7,11 +7,11 @@
 #include "../onegin_headers/array_to_file_translation.h"
 #include "../onegin_headers/files_input.h"
 
-void_sex output_array(const Onegin_Variables data_variables, const Onegin_Arrays *data_arrays)
+void_sex output_array(const Onegin_General_Data *onegin_array, const size_t str_nums)
 {
-    for(size_t i = 0; i < data_variables.str_nums; i++)
+    for(size_t i = 0; i < str_nums; i++)
     {
-        puts(data_arrays->strings_ptrs[i]);
+        puts(onegin_array[i].string_ptr);
     }
 }
 
@@ -31,14 +31,14 @@ void_sex my_file_close(FILE* data)
 }
 
 
-void_sex compete_outp_array(Onegin_Variables *data_vars, Onegin_Arrays *data_arrays,
-                            Onegin_Files_Attributes *data_files, const char* name_string)
+void_sex compete_outp_array(Onegin_Variables *data_vars, Onegin_General_Data *onegin_array,
+                            char* my_buffer, Onegin_Files_Attributes *data_files, const char* name_string)
 {
     file_write_open(data_files, name_string);
 
-    fill_sorted_file(data_arrays, *data_vars, data_files->file_write);
+    fill_sorted_file(onegin_array, *data_vars, data_files);
     
-    mem_free(data_arrays);
+    mem_free(onegin_array, my_buffer);
 
     my_file_close(data_files->file_write);
 }
