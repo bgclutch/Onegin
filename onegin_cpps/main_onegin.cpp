@@ -34,6 +34,7 @@ struct Onegin_Files_Attributes data_files =
     .second_file_index = 0
 };
 
+void (*comparers[])() = {comparer_start(), comparer_end()};
  
 int main(int argc, char* argv[])
 {
@@ -45,7 +46,7 @@ int main(int argc, char* argv[])
 
         complete_array_of_ptrs(onegin_array, &data_vars);
 
-        sort_arrays(&data_vars, onegin_array);
+        sort_arrays(&data_vars, onegin_array, &comparers);
 
         compete_outp_array(&data_vars, onegin_array, data_vars.my_buffer, &data_files, argv[2]);   
 

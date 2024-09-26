@@ -29,8 +29,8 @@ void_sex my_sort(Onegin_General_Data *onegin_array, size_t left, size_t right, v
     {   
         for(size_t i = left; i < right - j - 1; i++)
         {
-            result = *(comparers[index](onegin_array[i].string_ptr,  onegin_array[i + 1].string_ptr,
-                              onegin_array[i].string_size, onegin_array[i + 1].string_size));
+            result = comparers[index](onegin_array[i].string_ptr,  onegin_array[i + 1].string_ptr,
+                              onegin_array[i].string_size, onegin_array[i + 1].string_size);
             if(result > 0)
             {
                 struct_swap(&onegin_array[i], &onegin_array[i + 1]);
@@ -111,7 +111,7 @@ int my_string_comparer_from_end(const char* str_1, const char* str_2, size_t len
 }
 
 
-void_sex sort_arrays(Onegin_Variables *data_vars, Onegin_General_Data *onegin_array)
+void_sex sort_arrays(Onegin_Variables *data_vars, Onegin_General_Data *onegin_array, void* comparers)
 {
     printf("\n\n"
             "unsorted\n\n");
