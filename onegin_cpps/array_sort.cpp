@@ -10,9 +10,10 @@
 #include "../onegin_headers/output_functions.h"
 #include "../onegin_headers/onegin_structs.h"
 
+
 size_t my_strlen(const char* arr)
 {
-    assert(arr && "my_strlen err");
+    assert(arr && "my_strlen err"); 
     size_t delta = 0;
     while(*(arr + delta) != '\0')
         delta++;
@@ -21,15 +22,15 @@ size_t my_strlen(const char* arr)
 }
 
 
-void_sex my_sort(Onegin_General_Data *onegin_array, size_t left, size_t right)
+void_sex my_sort(Onegin_General_Data *onegin_array, size_t left, size_t right, void* comparers, size_t index)
 {       
     int result = 0;
     for(size_t j = left; j < right - 1; j++) 
     {   
         for(size_t i = left; i < right - j - 1; i++)
         {
-            result = my_string_comparer_from_start(onegin_array[i].string_ptr , onegin_array[i + 1].string_ptr,
-                                                   onegin_array[i].string_size, onegin_array[i + 1].string_size);
+            result = *(comparers[index](onegin_array[i].string_ptr,  onegin_array[i + 1].string_ptr,
+                              onegin_array[i].string_size, onegin_array[i + 1].string_size));
             if(result > 0)
             {
                 struct_swap(&onegin_array[i], &onegin_array[i + 1]);
@@ -38,22 +39,22 @@ void_sex my_sort(Onegin_General_Data *onegin_array, size_t left, size_t right)
     }
 }
 
-void_sex my_sort_end(Onegin_General_Data *onegin_array, const size_t left, const size_t right)
-{   
-    int result = 0;
-    for(size_t j = left; j < right - 1; j++) 
-    {   
-        for(size_t i = left; i < right - j - 1; i++)
-        {
-            result = my_string_comparer_from_end(onegin_array[i].string_ptr,  onegin_array[i + 1].string_ptr,
-                                                 onegin_array[i].string_size, onegin_array[i + 1].string_size);
-            if(result > 0)
-            {
-                struct_swap(&onegin_array[i], &onegin_array[i + 1]); 
-            }
-        }
-    }
-}
+// void_sex my_sort_end(Onegin_General_Data *onegin_array, const size_t left, const size_t right, void* comparer)
+// {   
+//     int result = 0;
+//     for(size_t j = left; j < right - 1; j++) 
+//     {   
+//         for(size_t i = left; i < right - j - 1; i++)
+//         {
+//             result = comparer(onegin_array[i].string_ptr,  onegin_array[i + 1].string_ptr,
+//                                                  onegin_array[i].string_size, onegin_array[i + 1].string_size);
+//             if(result > 0)
+//             {
+//                 struct_swap(&onegin_array[i], &onegin_array[i + 1]); 
+//             }
+//         }
+//     }
+// }
 
 
 int my_string_comparer_from_start(const char* str_1, const char* str_2, size_t len_1, size_t len_2)
@@ -120,14 +121,14 @@ void_sex sort_arrays(Onegin_Variables *data_vars, Onegin_General_Data *onegin_ar
     printf("\n\n"
            "sorted from the start bubble\n\n");
 
-    my_sort(onegin_array, 0, data_vars->str_nums);
+    my_sort(onegin_array, 0, data_vars->str_nums, comparers, 0);//FIXME enum!!
 
     output_array(onegin_array, data_vars->str_nums);
 
     printf("\n\n"
             "sorted from the end\n\n");
 
-    my_sort_end(onegin_array, 0, data_vars->str_nums);
+    my_sort(onegin_array, 0, data_vars->str_nums, comparers, 1);//FIXME enum!!
 
     output_array(onegin_array, data_vars->str_nums);
 }

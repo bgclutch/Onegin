@@ -59,5 +59,4 @@ struct Onegin_Files_Attributes
     size_t  second_file_index;
 };
 
-
 #endif //ONEGIN_STRUCTS_H_
